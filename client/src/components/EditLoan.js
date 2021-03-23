@@ -27,7 +27,6 @@ const EditLoan = ({ match }) => {
                 try {
                     const res = await fetch(`/api/loans/${loanId}`);
                     const data = await res.json();
-                    console.log(data);
                     if (!res.ok) {
                         setErrors(data.errors);
                     } else {
@@ -48,6 +47,7 @@ const EditLoan = ({ match }) => {
     useEffect(getLoan, [rerender]);
 
     const putLoan = () => {
+        console.log("loanId is ", loanId);
         (async _ => {
             const response = await fetchWithCSRF(`/api/loans/${loanId}`, {
                 method: 'PUT', headers: {"Content-Type": "application/json"},
@@ -137,7 +137,8 @@ const EditLoan = ({ match }) => {
 
 
 
-            {(loanId) ? null : (
+            {/* {(loanId) ? null : ( */}
+            {(
                 <>
                     <button onClick={loanId ? putLoan : postLoan}>
                         <h3>{loanId ? "Submit changes" : "Create loan"}</h3>

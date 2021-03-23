@@ -21,6 +21,7 @@ def index():
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
+        print(new_loan)
         db.session.add(new_loan)
         db.session.commit()
         return {"message": "successfully added a loan"}
@@ -30,7 +31,6 @@ def index():
 
 @loans.route('/<loan_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 def one(loan_id):
-    print(loan_id)
     loan = Loan.query.get(int(loan_id))
 
     # duplicating a loan
@@ -53,17 +53,20 @@ def one(loan_id):
         return loan.to_dict()
 
     if request.method == 'PUT':
+        # print("top of loans put says that loan_id is ", loan_id)
         if not request.is_json:
             return jsonify({"message": "Missing JSON in request"}), 400
-        new_loan = Loan(
-            name=request.json.get('name', None),
-            amount=request.json.get('amount', None),
-            interest_rate=request.json.get('interestRate', None),
-            length_in_months=request.json.get('lengthInMonths', None),
-            monthly_payment=request.json.get('monthlyPayment', None),
-            created_at=datetime.now(),
-            updated_at = datetime.now()
-        )
+        loan.name = request.json.get('name', None)
+        loan.amount = request.json.get('amount', None)
+        loan.interest_rate = request.json.get('interestRate', None)
+        loan.length_in_months = request.json.get('lengthInMonths', None)
+        loan.monthly_payment = request.json.get('monthlyPayment', None)
+        loan.updated_at = datetime.now()
+
+        db.session.commit()
+        return {"message": "I hope that you like the new name for this course."}
+
+        # print("farther down says that modified loan is ", loan)
         db.session.commit()
         return {"message": "I hope that you like the new details for this loan."}
 

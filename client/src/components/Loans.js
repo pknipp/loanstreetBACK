@@ -56,9 +56,9 @@ const Loans = () => {
                             <NavLink to={`/loans/edit/${loan.id}`}>
                                 edit
                             </NavLink>
-                            <NavLink to={`/loans/${loan.id}`}>
+                            {/* <NavLink to={`/loans/${loan.id}`}> */}
                                 {loan.name}
-                            </NavLink>
+                            {/* </NavLink> */}
                         </>
                     </li>
                 ))}

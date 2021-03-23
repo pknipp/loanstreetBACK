@@ -14,9 +14,9 @@ def index():
         new_loan = Loan(
             user_id=current_user.id,
             amount=request.json.get('amount', None),
-            interest_rate=request.json.get('interest_rate', None),
-            loan_length_in_months=request.json.get('loan_length_in_months', None),
-            monthly_payment=request.json.get('monthly_payment', None),
+            interest_rate=request.json.get('interestRate', None),
+            loan_length_in_months=request.json.get('loanLengthInMonths', None),
+            monthly_payment=request.json.get('monthlyPayment', None),
             created_at=datetime.now(),
             updated_at=datetime.now()
         )

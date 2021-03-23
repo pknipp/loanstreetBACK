@@ -21,17 +21,19 @@ def index():
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
-        # print(new_loan)
         db.session.add(new_loan)
         db.session.commit()
         return {"message": "successfully added a loan"}
 
     if request.method == 'GET':
-        return {"loans": [loan.to_dict() for loan in Loan.query]}
+        loans = Loan.query.filter(Loan.user_id == current_user.id)
+        return {"loans": [loan.to_dict() for loan in loans]}
 
 @loans.route('/<loan_id>', methods=['POST', 'GET', 'DELETE', 'PUT'])
 def one(loan_id):
     loan = Loan.query.get(int(loan_id))
+    if not loan.user_id == current_user.id:
+        return {"errors": ["You are not authorized to access this question."]}, 401
 
     # duplicating a loan
     if request.method == 'POST':
@@ -40,7 +42,7 @@ def one(loan_id):
             name='COPY OF ' + loan.name,
             amount=loan.amount,
             interest_rate=loan.interest_rate,
-            loan_length_in_months=loan.length_in_months,
+            length_in_months=loan.length_in_months,
             monthly_payment=loan.monthly_payment,
             created_at=datetime.now(),
             updated_at=datetime.now()
@@ -53,7 +55,6 @@ def one(loan_id):
         return loan.to_dict()
 
     if request.method == 'PUT':
-        # print("top of loans put says that loan_id is ", loan_id)
         if not request.is_json:
             return jsonify({"message": "Missing JSON in request"}), 400
         loan.name = request.json.get('name', None)
@@ -63,10 +64,6 @@ def one(loan_id):
         loan.monthly_payment = request.json.get('monthlyPayment', None)
         loan.updated_at = datetime.now()
 
-        db.session.commit()
-        return {"message": "I hope that you like the new name for this course."}
-
-        # print("farther down says that modified loan is ", loan)
         db.session.commit()
         return {"message": "I hope that you like the new details for this loan."}
 

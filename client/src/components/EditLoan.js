@@ -103,6 +103,7 @@ const EditLoan = ({ match }) => {
 
     return !currentUser ? <Redirect to="/login" /> : (
         <>
+            Hi there
             <h2>Loan Editor</h2>
             {errors.length ? errors.map(err => <li key={err} className="error">{err}</li>) : ''}
             <input
@@ -110,7 +111,7 @@ const EditLoan = ({ match }) => {
                 onChange={e => setAmount(e.target.value)} className="larger"
                 disabled={!canEdit && loanId}
             />
-            {(!canEdit && loanId) ? null : (
+            {(loanId) ? null : (
                 <>
                     <button onClick={loanId ? putLoan : postLoan}>
                         <h3>{loanId ? "Submit changes" : "Create loan"}</h3>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
@@ -45,7 +45,7 @@ const App = _ => {
                         <ProtectedRoute exact path="/" component={Loans} />
                         <ProtectedRoute exact path="/logout" component={LogOut} currentUser={currentUser} />
                         <ProtectedRoute exact path="/edituser" component={EditUser} currentUser={currentUser} />
-                        <ProtectedRoute exact path="/courses/edit/:loanId" component={EditLoan} />
+                        <Route exact path="/loans/edit/:loanId" component={EditLoan} />
                         <ProtectedRoute exact path="/" component={Success} />
                     </Switch>
                 </BrowserRouter>

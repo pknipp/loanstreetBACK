@@ -7,6 +7,7 @@ const NavBar = ({ currentUser }) => (
         {(currentUser) ?
             <>
                 <span>{currentUser.email}</span>
+                <NavLink exact to="/" className="nav" activeClassName="active">Home</NavLink>
                 <NavLink to="/edituser" activeClassName="active">Account Details</NavLink>
                 <NavLink to="/logout" activeClassName="active">Log Out</NavLink>
             </>

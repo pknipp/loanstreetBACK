@@ -12,7 +12,7 @@ const Loans = () => {
 
     const getLoans = async () => {
         try {
-            const res = await fetch(`/api/loans/${currentUser.id + ' 0'}`)
+            const res = await fetch(`/api/loans`)
             if (res.ok) {
                 const data = await res.json();
                 setLoans(data.loans);

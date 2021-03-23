@@ -8,6 +8,7 @@ from flask_migrate import Migrate
 from loanstreet.models import db, User
 from loanstreet.api.session import session
 from loanstreet.api.users import users
+from loanstreet.api.loans import loans
 from loanstreet.config import Config
 from datetime import datetime
 
@@ -18,6 +19,7 @@ migrate = Migrate(app, db)
 app.config.from_object(Config)
 app.register_blueprint(session, url_prefix='/api/session')
 app.register_blueprint(users, url_prefix='/api/users')
+app.register_blueprint(loans, url_prefix='/api/loans')
 db.init_app(app)
 
 

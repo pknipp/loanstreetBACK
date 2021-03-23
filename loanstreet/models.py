@@ -49,6 +49,7 @@ class Loan(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     interest_rate = db.Column(db.Float, nullable=False)
     loan_length_in_months = db.Column(db.Float, nullable=False)
@@ -59,6 +60,7 @@ class Loan(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
+            "name": self.name,
             "user_id": self.user_id,
             "amount": self.amount,
             "interest_rate": self.interest_rate,

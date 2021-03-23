@@ -13,6 +13,7 @@ def index():
             return jsonify({"message": "Missing JSON in request"}), 400
         new_loan = Loan(
             user_id=current_user.id,
+            name=request.json.get('name', None),
             amount=request.json.get('amount', None),
             interest_rate=request.json.get('interestRate', None),
             loan_length_in_months=request.json.get('loanLengthInMonths', None),

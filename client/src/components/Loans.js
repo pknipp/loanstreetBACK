@@ -16,7 +16,7 @@ const Loans = () => {
             if (res.ok) {
                 const data = await res.json();
                 setLoans(data.loans);
-                setLoanIds(data.loans.map(loan => loan.loan.id));
+                setLoanIds(data.loans.map(loan => loan.id));
             }
         } catch (err) {
             console.error(err)

@@ -6,10 +6,11 @@ import AuthContext from '../auth';
 const EditLoan = ({ match }) => {
     const { fetchWithCSRF, currentUser } = useContext(AuthContext);
     const loanId = Number(match.params.loanId);
-    const [amount, setAmount] = useState(0);
-    const [interestRate, setInterestRate] = useState(0);
-    const [loanLengthInMonths, setLoanLengthInMonths] = useState(0);
-    const [monthlyPayment, setMonthlyPayment] = useState(0);
+    const [name, setName] = useState('');
+    const [amount, setAmount] = useState('');
+    const [interestRate, setInterestRate] = useState('');
+    const [loanLengthInMonths, setLoanLengthInMonths] = useState('');
+    const [monthlyPayment, setMonthlyPayment] = useState('');
     const [rerender, setRerender] = useState(false);
     const [canEdit, setCanEdit] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -44,7 +45,7 @@ const EditLoan = ({ match }) => {
         (async _ => {
             const response = await fetchWithCSRF(`/api/loans/${loanId}`, {
                 method: 'PUT', headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ amount, interestRate, loanLengthInMonths, monthlyPayment })
+                body: JSON.stringify({ name, amount, interestRate, loanLengthInMonths, monthlyPayment })
             });
             const responseData = await response.json();
             if (!response.ok) setErrors(responseData.errors);
@@ -58,7 +59,7 @@ const EditLoan = ({ match }) => {
         (async _ => {
             const response = await fetchWithCSRF(`/api/loans`, {
                 method: 'POST', headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ amount, interestRate, loanLengthInMonths, monthlyPayment })
+                body: JSON.stringify({ name, amount, interestRate, loanLengthInMonths, monthlyPayment })
             });
             const responseData = await response.json();
             if (!response.ok) setErrors(responseData.errors);
@@ -103,14 +104,36 @@ const EditLoan = ({ match }) => {
 
     return !currentUser ? <Redirect to="/login" /> : (
         <>
-            Hi there
             <h2>Loan Editor</h2>
             {errors.length ? errors.map(err => <li key={err} className="error">{err}</li>) : ''}
             <input
-                type="text" placeholder="Amount of new course" value={amount}
-                onChange={e => setAmount(e.target.value)} className="larger"
+                type="text" placeholder="Name of new loan" value={name}
+                onChange={e => setName(e.target.value)} className="larger"
                 disabled={!canEdit && loanId}
             />
+            <input
+                type="text" placeholder="Amount" value={amount}
+                onChange={e => setAmount(Number(e.target.value))} className="larger"
+                disabled={!canEdit && loanId}
+            />
+            <input
+                type="text" placeholder="Interest rate" value={interestRate}
+                onChange={e => setInterestRate(Number(e.target.value))} className="larger"
+                disabled={!canEdit && loanId}
+            />
+
+            <input
+                type="text" placeholder="Loan length (in months)" value={loanLengthInMonths}
+                onChange={e => setLoanLengthInMonths(Number(e.target.value))} className="larger"
+                disabled={!canEdit && loanId}
+            />
+
+            <input
+                type="text" placeholder="Monthly payment" value={monthlyPayment}
+                onChange={e => setMonthlyPayment(Number(e.target.value))} className="larger"
+                disabled={!canEdit && loanId}
+            />
+
             {(loanId) ? null : (
                 <>
                     <button onClick={loanId ? putLoan : postLoan}>

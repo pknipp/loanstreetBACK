@@ -15,16 +15,16 @@ RUN ["npm", "run", "build", "--prefix", "client"]
 # Move our react build for Flask to serve
 # Use cp here because we're copying files inside our working directory, not from
 # our host machine.
-RUN ["cp", "-r", "client/build", "python_fs/static"]
-RUN ["cp", "-r", "python_fs/static/static/js", "python_fs/static"]
-RUN ["cp", "-r", "python_fs/static/static/css", "python_fs/static"]
+RUN ["cp", "-r", "client/build", "loanstreet/static"]
+RUN ["cp", "-r", "loanstreet/static/static/js", "loanstreet/static"]
+RUN ["cp", "-r", "loanstreet/static/static/css", "loanstreet/static"]
 
 # Setup Flask environment
-ENV FLASK_APP=python_fs
+ENV FLASK_APP=loanstreet
 ENV FLASK_ENV=production
 ENV SQLALCHEMY_ECHO=True
 
 EXPOSE 8000
 
 # Run flask environment
-CMD gunicorn python_fs:app
+CMD gunicorn loanstreet:app

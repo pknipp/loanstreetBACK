@@ -41,3 +41,31 @@ class User(db.Model, UserMixin):
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
+
+    loans = db.relationship("Loan", back_populates="user", cascade="all, delete-orphan")
+
+class Loan(db.Model, UserMixin):
+    __tablename__ = 'loans'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    interest_rate = db.Column(db.Float, nullable=False)
+    loan_length_in_months = db.Column(db.Float, nullable=False)
+    monthly_payment = db.Column(db.Float, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
+    updated_at = db.Column(db.DateTime, nullable=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "amount": self.amount,
+            "interest_rate": self.interest_rate,
+            "loan_length_in_months": self.loan_length_in_months,
+            "monthly_payment": self.monthly_payment,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
+
+    user = db.relationship("User", back_populates="loans")

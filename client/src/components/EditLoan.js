@@ -47,7 +47,7 @@ const EditLoan = ({ match }) => {
     useEffect(getLoan, [rerender]);
 
     const putLoan = () => {
-        console.log("loanId is ", loanId);
+        // console.log("loanId is ", loanId);
         (async _ => {
             const response = await fetchWithCSRF(`/api/loans/${loanId}`, {
                 method: 'PUT', headers: {"Content-Type": "application/json"},

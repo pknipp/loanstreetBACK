@@ -21,7 +21,7 @@ def index():
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
-        print(new_loan)
+        # print(new_loan)
         db.session.add(new_loan)
         db.session.commit()
         return {"message": "successfully added a loan"}

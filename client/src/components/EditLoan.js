@@ -112,24 +112,24 @@ const EditLoan = ({ match }) => {
                 disabled={!canEdit && loanId}
             />
             <input
-                type="text" placeholder="Amount" value={amount}
+                type="number" placeholder="Amount" value={amount}
                 onChange={e => setAmount(Number(e.target.value))} className="larger"
                 disabled={!canEdit && loanId}
             />
             <input
-                type="text" placeholder="Interest rate" value={interestRate}
+                type="number" placeholder="Interest rate" value={interestRate}
                 onChange={e => setInterestRate(Number(e.target.value))} className="larger"
                 disabled={!canEdit && loanId}
             />
 
             <input
-                type="text" placeholder="Loan length (in months)" value={loanLengthInMonths}
+                type="number" placeholder="Loan length (in months)" value={loanLengthInMonths}
                 onChange={e => setLoanLengthInMonths(Number(e.target.value))} className="larger"
                 disabled={!canEdit && loanId}
             />
 
             <input
-                type="text" placeholder="Monthly payment" value={monthlyPayment}
+                type="number" placeholder="Monthly payment" value={monthlyPayment}
                 onChange={e => setMonthlyPayment(Number(e.target.value))} className="larger"
                 disabled={!canEdit && loanId}
             />

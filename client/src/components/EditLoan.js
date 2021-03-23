@@ -112,51 +112,51 @@ const EditLoan = ({ match }) => {
         <>
             <h2>Loan Editor</h2>
             {errors.length ? errors.map(err => <li key={err} className="error">{err}</li>) : ''}
+            <div>
+                Name of Loan
+            </div>
             <input
                 type="text" value={name}
                 onChange={e => setName(e.target.value)} className="larger"
             />
+            <div>Amount of loan</div>
             <input
-                type="text" placeholder="Amount" value={amount}
+                type="text" value={amount}
                 onChange={e => setAmount((e.target.value))} className="larger"
             />
+            <div>Interest rate</div>
             <input
-                type="text" placeholder="Interest rate" value={interestRate}
+                type="text" value={interestRate}
                 onChange={e => setInterestRate((e.target.value))} className="larger"
             />
-
+            <div>Length (in months)</div>
             <input
-                type="text" placeholder="Length (in months)" value={lengthInMonths}
+                type="text" value={lengthInMonths}
                 onChange={e => setLengthInMonths((e.target.value))} className="larger"
             />
-
+            <div>Monthly payment</div>
             <input
-                type="text" placeholder="Monthly payment" value={monthlyPayment}
+                type="text" value={monthlyPayment}
                 onChange={e => setMonthlyPayment((e.target.value))} className="larger"
             />
-
-
-
-            {/* {(loanId) ? null : ( */}
-            {(
-                <>
-                    <button onClick={loanId ? putLoan : postLoan}>
-                        <h3>{loanId ? "Submit changes" : "Create loan"}</h3>
-                    </button>
-                </>
-            )}
+            <div>
+                <button onClick={loanId ? putLoan : postLoan}>
+                    <h3>{loanId ? "Submit changes" : "Create loan"}</h3>
+                </button>
+            </div>
 
             {!loanId ? null :
                 <>
                     <>{messages.map(err => <li key={err}>{err}</li>)}</>
                     <h4>Would you like to duplicate
-                        {!canEdit && loanId ? " " :
-                        " or delete "}
+                        {/* {!canEdit && loanId ? " " : */}
+                        {" or delete "}
                         this loan?</h4>
                     <span>
                         <button onClick={() => duplicateLoan()}><h3>duplicate</h3></button>
-                        {!canEdit && loanId ? null :
-                        <button onClick={() => deleteLoan()}><h3>delete</h3></button>}
+                        {/* {!canEdit && loanId ? null : */}
+                        <button onClick={() => deleteLoan()}><h3>delete</h3></button>
+                        {/* } */}
                     </span>
                 </>
             }

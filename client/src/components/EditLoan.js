@@ -1,10 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
 import AuthContext from '../auth';
+// import ToggleInfo from './ToggleInfo';
 
 const EditLoan = ({ match }) => {
     const { fetchWithCSRF, currentUser } = useContext(AuthContext);
     const loanId = Number(match.params.loanId);
+    const [amount, setAmount] = useState(0);
+    const [interestRate, setInterestRate] = useState(0);
+    const [loanLengthInMonths, setLoanLengthInMonths] = useState(0);
+    const [monthlyPayment, setMonthlyPayment] = useState(0);
     const [rerender, setRerender] = useState(false);
     const [canEdit, setCanEdit] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -33,7 +38,7 @@ const EditLoan = ({ match }) => {
         }
     };
 
-    useEffect(getCourse, [rerender]);
+    useEffect(getLoan, [rerender]);
 
     const putLoan = () => {
         (async _ => {
@@ -107,13 +112,6 @@ const EditLoan = ({ match }) => {
             />
             {(!canEdit && loanId) ? null : (
                 <>
-                    <h4>
-                        privacy setting:
-                        <ToggleInfo onClick={handleToggle} name="privacy" toggle={showInfo.privacy} />
-                    </h4>
-                    <div><i>{showInfo.privacy ? text.privacy : null}</i></div>
-                    {isPublic ? "public " : "private "}
-                    <button onClick={() => setIsPublic(!isPublic)}>toggle</button>
                     <button onClick={loanId ? putLoan : postLoan}>
                         <h3>{loanId ? "Submit changes" : "Create loan"}</h3>
                     </button>
@@ -124,7 +122,7 @@ const EditLoan = ({ match }) => {
                 <>
                     <>{messages.map(err => <li key={err}>{err}</li>)}</>
                     <h4>Would you like to duplicate
-                        {!canEdit && courseId ? " " :
+                        {!canEdit && loanId ? " " :
                         " or delete "}
                         this loan?</h4>
                     <span>
@@ -137,3 +135,4 @@ const EditLoan = ({ match }) => {
         </>
     );
 };
+export default EditLoan;

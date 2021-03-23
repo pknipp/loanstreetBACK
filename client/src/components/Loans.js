@@ -53,7 +53,7 @@ const Loans = () => {
                 {loans.map(loan => (
                     <li key={loan.id}>
                         <>
-                            <NavLink to={`/courses/edit/${loan.id}`}>
+                            <NavLink to={`/loans/edit/${loan.id}`}>
                                 edit
                             </NavLink>
                             <NavLink to={`/loans/${loan.id}`}>

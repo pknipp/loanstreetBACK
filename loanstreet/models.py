@@ -52,7 +52,7 @@ class Loan(db.Model, UserMixin):
     name = db.Column(db.String(100), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     interest_rate = db.Column(db.Float, nullable=False)
-    loan_length_in_months = db.Column(db.Float, nullable=False)
+    length_in_months = db.Column(db.Float, nullable=False)
     monthly_payment = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime, nullable=False)
@@ -64,7 +64,7 @@ class Loan(db.Model, UserMixin):
             "user_id": self.user_id,
             "amount": self.amount,
             "interest_rate": self.interest_rate,
-            "loan_length_in_months": self.loan_length_in_months,
+            "length_in_months": self.length_in_months,
             "monthly_payment": self.monthly_payment,
             "created_at": self.created_at,
             "updated_at": self.updated_at

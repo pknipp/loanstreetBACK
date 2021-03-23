@@ -7,6 +7,7 @@ import LogOut from './components/LogOut';
 import EditUser from './components/EditUser';
 import Loans from './components/Loans';
 import EditLoan from './components/EditLoan';
+// import Loan from './components/Loan';
 import ProtectedRoute from "./components/ProtectedRoute"
 import AuthRoute from "./components/AuthRoute"
 import AuthContext from './auth';
@@ -46,6 +47,7 @@ const App = _ => {
                         <ProtectedRoute exact path="/logout" component={LogOut} currentUser={currentUser} />
                         <ProtectedRoute exact path="/edituser" component={EditUser} currentUser={currentUser} />
                         <Route exact path="/loans/edit/:loanId" component={EditLoan} />
+                        {/* <Route exact path="/loans/:courseId" component={Loan} /> */}
                         <ProtectedRoute exact path="/" component={Success} />
                     </Switch>
                 </BrowserRouter>

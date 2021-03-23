@@ -9,7 +9,7 @@ const EditLoan = ({ match }) => {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState('');
     const [interestRate, setInterestRate] = useState('');
-    const [loanLengthInMonths, setLoanLengthInMonths] = useState('');
+    const [lengthInMonths, setLengthInMonths] = useState('');
     const [monthlyPayment, setMonthlyPayment] = useState('');
     const [rerender, setRerender] = useState(false);
     const [canEdit, setCanEdit] = useState(false);
@@ -27,10 +27,16 @@ const EditLoan = ({ match }) => {
                 try {
                     const res = await fetch(`/api/loans/${loanId}`);
                     const data = await res.json();
+                    console.log(data);
                     if (!res.ok) {
                         setErrors(data.errors);
                     } else {
-                        setCanEdit(data.loan.user_id === currentUser.id);
+                        // setCanEdit(data.loan.user_id === currentUser.id);
+                        setName(data.name);
+                        setAmount(data.amount);
+                        setInterestRate(data.interest_rate);
+                        setLengthInMonths(data.length_in_months);
+                        setMonthlyPayment(data.monthly_payment);
                     }
                 } catch (err) {
                     console.error(err)
@@ -45,7 +51,7 @@ const EditLoan = ({ match }) => {
         (async _ => {
             const response = await fetchWithCSRF(`/api/loans/${loanId}`, {
                 method: 'PUT', headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ name, amount, interestRate, loanLengthInMonths, monthlyPayment })
+                body: JSON.stringify({ name, amount, interestRate, lengthInMonths, monthlyPayment })
             });
             const responseData = await response.json();
             if (!response.ok) setErrors(responseData.errors);
@@ -59,7 +65,7 @@ const EditLoan = ({ match }) => {
         (async _ => {
             const response = await fetchWithCSRF(`/api/loans`, {
                 method: 'POST', headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ name, amount, interestRate, loanLengthInMonths, monthlyPayment })
+                body: JSON.stringify({ name, amount, interestRate, lengthInMonths, monthlyPayment })
             });
             const responseData = await response.json();
             if (!response.ok) setErrors(responseData.errors);
@@ -95,44 +101,41 @@ const EditLoan = ({ match }) => {
         })();
     }
 
-    const handleToggle = e => {
-        let name = e.currentTarget.name;
-        let newShowInfo = {...showInfo};
-        newShowInfo[name] = !showInfo[name];
-        setShowInfo(newShowInfo);
-    }
+    // const handleToggle = e => {
+    //     let name = e.currentTarget.name;
+    //     let newShowInfo = {...showInfo};
+    //     newShowInfo[name] = !showInfo[name];
+    //     setShowInfo(newShowInfo);
+    // }
 
     return !currentUser ? <Redirect to="/login" /> : (
         <>
             <h2>Loan Editor</h2>
             {errors.length ? errors.map(err => <li key={err} className="error">{err}</li>) : ''}
             <input
-                type="text" placeholder="Name of new loan" value={name}
+                type="text" value={name}
                 onChange={e => setName(e.target.value)} className="larger"
-                disabled={!canEdit && loanId}
             />
             <input
-                type="number" placeholder="Amount" value={amount}
-                onChange={e => setAmount(Number(e.target.value))} className="larger"
-                disabled={!canEdit && loanId}
+                type="text" placeholder="Amount" value={amount}
+                onChange={e => setAmount((e.target.value))} className="larger"
             />
             <input
-                type="number" placeholder="Interest rate" value={interestRate}
-                onChange={e => setInterestRate(Number(e.target.value))} className="larger"
-                disabled={!canEdit && loanId}
+                type="text" placeholder="Interest rate" value={interestRate}
+                onChange={e => setInterestRate((e.target.value))} className="larger"
             />
 
             <input
-                type="number" placeholder="Loan length (in months)" value={loanLengthInMonths}
-                onChange={e => setLoanLengthInMonths(Number(e.target.value))} className="larger"
-                disabled={!canEdit && loanId}
+                type="text" placeholder="Length (in months)" value={lengthInMonths}
+                onChange={e => setLengthInMonths((e.target.value))} className="larger"
             />
 
             <input
-                type="number" placeholder="Monthly payment" value={monthlyPayment}
-                onChange={e => setMonthlyPayment(Number(e.target.value))} className="larger"
-                disabled={!canEdit && loanId}
+                type="text" placeholder="Monthly payment" value={monthlyPayment}
+                onChange={e => setMonthlyPayment((e.target.value))} className="larger"
             />
+
+
 
             {(loanId) ? null : (
                 <>
